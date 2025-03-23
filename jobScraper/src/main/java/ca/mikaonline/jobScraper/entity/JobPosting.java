@@ -1,4 +1,4 @@
-package ca.mikaonline.jobScraper;
+package ca.mikaonline.jobScraper.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,13 +16,12 @@ import java.util.Date;
 public class JobPosting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String title;
     private String description;
     private String url;
     private Date postedAt;
     private Date expiresAt;
-    private boolean saved;
 
     @ManyToOne
     @JoinColumn(name = "job_board_id", nullable = false)

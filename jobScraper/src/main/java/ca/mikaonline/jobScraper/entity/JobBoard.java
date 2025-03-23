@@ -1,4 +1,4 @@
-package ca.mikaonline.jobScraper;
+package ca.mikaonline.jobScraper.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 public class JobBoard {
     @Id
-    private int id;
+    private Long id;
     private String url;
     private String displayName;
 

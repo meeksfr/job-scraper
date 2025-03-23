@@ -1,4 +1,4 @@
-package ca.mikaonline.jobScraper;
+package ca.mikaonline.jobScraper.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -19,9 +18,8 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String email;
-    private Date createdAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BoardSubscription> subscriptions = new ArrayList<>();

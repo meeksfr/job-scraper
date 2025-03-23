@@ -1,4 +1,4 @@
-package ca.mikaonline.jobScraper;
+package ca.mikaonline.jobScraper.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.data.annotation.Id;
 public class BoardSubscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
