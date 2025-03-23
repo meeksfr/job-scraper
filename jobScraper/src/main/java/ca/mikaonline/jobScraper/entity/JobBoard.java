@@ -1,14 +1,13 @@
 package ca.mikaonline.jobScraper.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobBoard {
+
+    private static final List<String> VALID_PROVIDERS = List.of(
+            "https://job-boards.greenhouse.io",
+            "https://jobs.lever.co",
+            "https://jobs.ashbyhq.com"
+    );
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String url;
     private String displayName;
@@ -28,5 +35,32 @@ public class JobBoard {
 
     @OneToMany(mappedBy = "parentBoard", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobPosting> postings = new ArrayList<>();
+
+    public JobBoard(String url) {
+        String provider = validateUrl(url);
+        this.url = url;
+        this.displayName = extractDisplayName(url, provider);
+    }
+
+    private String validateUrl(String url) {
+        for (String provider : VALID_PROVIDERS) {
+            if (url.startsWith(provider)) {
+                return provider;
+            }
+        }
+        throw new IllegalArgumentException("Please use a url from an approved provider: " + VALID_PROVIDERS);
+    }
+
+    private String extractDisplayName(String url, String provider){
+        String remainingPath = url.substring(provider.length());
+        String[] segments = remainingPath.split("[/?]", 2);
+
+        if (segments.length > 0 && !segments[0].isEmpty()) {
+            return URLDecoder.decode(segments[0], StandardCharsets.UTF_8);
+        }
+        else {
+            return "Unknown";
+        }
+    }
 }
 
