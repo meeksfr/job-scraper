@@ -6,7 +6,9 @@ import ca.mikaonline.jobScraper.entity.User;
 import ca.mikaonline.jobScraper.repository.BoardSubscriptionRepository;
 import ca.mikaonline.jobScraper.repository.JobBoardRepository;
 import ca.mikaonline.jobScraper.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class BoardSubscriptionService {
     }
 
     public BoardSubscription addSubscription(Long userId, String boardUrl){
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with ID: " + userId));
         JobBoard jobBoard = jobBoardRepository.findByUrl(boardUrl).orElseGet(() -> jobBoardRepository.save(new JobBoard(boardUrl)));
 
         BoardSubscription subscription = new BoardSubscription();
@@ -39,5 +41,13 @@ public class BoardSubscriptionService {
 
     public void removeSubscription(Long boardSubscriptionId){
         boardSubscriptionRepository.deleteById(boardSubscriptionId);
+    }
+
+    public void removeSubscriptionByFields(Long userId, String boardUrl){
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with ID: " + userId));
+        JobBoard jobBoard = jobBoardRepository.findByUrl(boardUrl).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found with URL: " + boardUrl));
+
+        BoardSubscription subscription = boardSubscriptionRepository.findByUserIdAndBoardId(user.getId(), jobBoard.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Subscription not found"));
+        boardSubscriptionRepository.deleteById(subscription.getId());
     }
 }

@@ -23,4 +23,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BoardSubscription> subscriptions = new ArrayList<>();
+
+    public User(String email){
+        this.email = email;
+    }
 }

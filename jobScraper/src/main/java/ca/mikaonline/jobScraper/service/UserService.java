@@ -2,9 +2,9 @@ package ca.mikaonline.jobScraper.service;
 
 import ca.mikaonline.jobScraper.entity.User;
 import ca.mikaonline.jobScraper.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserService {
@@ -16,11 +16,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User saveUser(User user){
-        return userRepository.save(user);
+    public User createUser(String email){
+        //TODO: add actual auth / token / password stuff
+        return userRepository.save(new User(email));
     }
 
-    public Optional<User> findByEmail(String email){
-        return userRepository.findByEmail(email);
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with email: " + email));
     }
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "postings")
@@ -20,10 +20,12 @@ public class JobPosting {
     private String title;
     private String description;
     private String url;
-    private Date postedAt;
-    private Date expiresAt;
+    private LocalDate postedAt;
+    private LocalDate expiresAt;
 
     @ManyToOne
     @JoinColumn(name = "job_board_id", nullable = false)
     private JobBoard parentBoard;
+
+
 }
