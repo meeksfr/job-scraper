@@ -1,0 +1,6 @@
+spring.application.name=jobScraper
+
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.url=<Supabase JDBC Session Pooler url>
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=none
