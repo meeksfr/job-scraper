@@ -1,17 +1,14 @@
 package ca.mikaonline.jobScraper.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "postings")
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 public class JobPosting {
     @Id

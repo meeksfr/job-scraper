@@ -47,7 +47,7 @@ public class BoardSubscriptionService {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with ID: " + userId));
         JobBoard jobBoard = jobBoardRepository.findByUrl(boardUrl).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found with URL: " + boardUrl));
 
-        BoardSubscription subscription = boardSubscriptionRepository.findByUserIdAndBoardId(user.getId(), jobBoard.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Subscription not found"));
+        BoardSubscription subscription = boardSubscriptionRepository.findByUserIdAndJobBoardId(user.getId(), jobBoard.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Subscription not found"));
         boardSubscriptionRepository.deleteById(subscription.getId());
     }
 }

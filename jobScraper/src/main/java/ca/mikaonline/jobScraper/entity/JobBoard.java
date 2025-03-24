@@ -1,10 +1,7 @@
 package ca.mikaonline.jobScraper.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
+import lombok.*;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -13,8 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "boards")
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
 public class JobBoard {
 

@@ -22,12 +22,12 @@ public class JobPostingService {
     }
 
     public List<JobPosting> getBoardPostings(Long boardId){
-        return jobPostingRepository.findByBoardId(boardId);
+        return jobPostingRepository.findByParentBoardId(boardId);
     }
 
     public List<JobPosting> getBoardPostings(String boardUrl){
         JobBoard board = jobBoardRepository.findByUrl(boardUrl).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found with url: " + boardUrl));
-        return jobPostingRepository.findByBoardId(board.getId());
+        return jobPostingRepository.findByParentBoardId(board.getId());
     }
 
     public JobPosting createJobPosting(String title, String description, String jobPostUrl, LocalDate postedAt, LocalDate expiresAt, String boardUrl){

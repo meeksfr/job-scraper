@@ -8,6 +8,5 @@ import java.util.Optional;
 
 public interface BoardSubscriptionRepository extends JpaRepository<BoardSubscription, Long> {
     List<BoardSubscription> findByUserId(Long userId);
-    List<BoardSubscription> findByBoardId(Long boardId);
-    Optional<BoardSubscription> findByUserIdAndBoardId(Long userId, Long boardId);
+    Optional<BoardSubscription> findByUserIdAndJobBoardId(Long userId, Long jobBoardId);
 }

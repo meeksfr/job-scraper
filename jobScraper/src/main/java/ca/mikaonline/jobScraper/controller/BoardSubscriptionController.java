@@ -24,8 +24,8 @@ public class BoardSubscriptionController {
         return new ResponseEntity<BoardSubscription>(boardSubscriptionService.addSubscription(Long.parseLong(body.get("userId")), body.get("boardUrl")), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<BoardSubscription>> getUserSubscriptions(@PathVariable String userId){
+    @GetMapping()
+    public ResponseEntity<List<BoardSubscription>> getUserSubscriptions(@RequestParam String userId){
         return new ResponseEntity<List<BoardSubscription>>(boardSubscriptionService.getUserSubscriptions(Long.parseLong(userId)), HttpStatus.OK);
     }
 

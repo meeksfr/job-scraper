@@ -26,8 +26,8 @@ public class JobPostingController {
         return new ResponseEntity<List<JobPosting>>(jobPostingService.getBoardPostings(boardId),HttpStatus.OK);
     }
 
-    @GetMapping("/boardUrl/{boardUrl}")
-    public ResponseEntity<List<JobPosting>> getPostings(@PathVariable String boardUrl){
+    @GetMapping("/boardUrl")
+    public ResponseEntity<List<JobPosting>> getPostings(@RequestParam String boardUrl){
         return new ResponseEntity<List<JobPosting>>(jobPostingService.getBoardPostings(boardUrl),HttpStatus.OK);
     }
 
