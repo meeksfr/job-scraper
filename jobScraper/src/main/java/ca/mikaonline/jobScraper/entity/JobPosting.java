@@ -1,5 +1,6 @@
 package ca.mikaonline.jobScraper.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class JobPosting {
 
     @ManyToOne
     @JoinColumn(name = "job_board_id", nullable = false)
+    @JsonIgnore //TODO: build out DTOs instead
     private JobBoard parentBoard;
 
 

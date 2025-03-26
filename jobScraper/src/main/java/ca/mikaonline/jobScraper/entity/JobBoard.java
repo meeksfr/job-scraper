@@ -1,11 +1,14 @@
 package ca.mikaonline.jobScraper.entity;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -28,6 +31,7 @@ public class JobBoard {
     private String displayName;
 
     @OneToMany(mappedBy = "jobBoard", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore //TODO: build out DTOs instead
     private List<BoardSubscription> subscriptions = new ArrayList<>();
 
     @OneToMany(mappedBy = "parentBoard", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -49,9 +53,8 @@ public class JobBoard {
     }
 
     private String extractDisplayName(String url, String provider){
-        String remainingPath = url.substring(provider.length());
+        String remainingPath = url.substring(provider.length() + 1); //+1 to get rid of leading slash
         String[] segments = remainingPath.split("[/?]", 2);
-
         if (segments.length > 0 && !segments[0].isEmpty()) {
             return URLDecoder.decode(segments[0], StandardCharsets.UTF_8);
         }

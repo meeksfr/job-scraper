@@ -1,5 +1,6 @@
 package ca.mikaonline.jobScraper.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,6 +16,7 @@ public class BoardSubscription {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore //TODO: build out DTOs instead
     private User user;
 
     @ManyToOne

@@ -39,8 +39,8 @@ public class JobPostingController {
                         body.get("description"),
                         body.get("job-url"),
                         LocalDate.parse(body.get("posted-at")),
-                        LocalDate.parse(body.get("expires-at")),
-                        body.get("board-url")
+                        LocalDate.parse(body.get("expires-at")), //TODO: add check constraint for expires-at > posted_at
+                        body.get("board-url") //TODO: refactor to retrieve board-url from job-url
                 ), HttpStatus.CREATED);
     }
 }
